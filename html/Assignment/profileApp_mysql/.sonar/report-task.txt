@@ -1,0 +1,5 @@
+projectKey=MySqlProfileApp
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/MySqlProfileApp
+ceTaskId=AVomitKH0VUXvpt4J4pb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVomitKH0VUXvpt4J4pb

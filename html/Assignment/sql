@@ -1,0 +1,419 @@
+select DISTINCT employee.id, employee.first_name,
+(SELECT DISTINCT concat( address.type , address.id ) from address  WHERE address.type = "permanent" ) as permanent ,
+(SELECT  DISTINCT address.type from address  WHERE address.type = "present") as present,
+city.name, state.name from employee, address,city,state 
+WHERE address.employee_id = employee.id and address.city_id = city.id and city.id = state.id;
+
+
+
+SELECT DISTINCT concat(address.type,city.name,state.name) as present FROM address,city,state WHERE address.type='present' and address.city_id=city.id and city.state_id=state.id
+
+SELECT DISTINCT concat(address.type,city.name,state.name) as permanent FROM address,city,state WHERE address.type='permanent' and address.city_id=city.id and city.state_id=state.id
+
+SELECT DISTINCT concat_ws("  ",address.type,city.name,state.name) as present FROM address,city,state WHERE address.type='permanent' and address.city_id=city.id and city.state_id=state.id
+
+select DISTINCT employee.id, employee.first_name,
+(SELECT DISTINCT concat_ws("  ",address.type,city.name,state.name) as present FROM address,city,state WHERE address.type='permanent' and address.city_id=city.id and city.state_id=state.id
+) as permanent ,
+(SELECT  DISTINCT address.type from address  WHERE address.type = "present") as present,
+city.name, state.name from employee, address,city,state 
+WHERE address.employee_id = employee.id and address.city_id = city.id and city.id = state.id;
+
+select DISTINCT employee.id, employee.first_name,concat_ws(" ",(SELECT DISTINCT address.type  from address  WHERE address.type = "permanent" ),city.name,state.name)
+ as permanent ,
+concat_ws(" ",(SELECT DISTINCT address.type  from address  WHERE address.type = "present" ),city.name,state.name)
+ as present
+from employee, address,city,state 
+WHERE address.employee_id = employee.id and address.city_id = city.id and city.id = state.id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select DISTINCT employee.id, employee.first_name,concat_ws(" ",(SELECT DISTINCT address.type  from address  WHERE address.type = "permanent" ),city.name,state.name)
+ as permanent ,
+concat_ws(" ",(SELECT DISTINCT address.type  from address  WHERE address.type = "present" ),city.name,state.name)
+ as present, employer.name, employment.name as employment 
+from employee, address,city,state, employer,employment 
+WHERE address.employee_id = employee.id and address.city_id = city.id and city.id = state.id and employee.employer_id = employer.id and employment.id = employee.employment_id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select DISTINCT employee.id, employee.first_name,concat_ws(" ",(SELECT DISTINCT address.type  from address  WHERE address.type = "permanent" ),address.address," ",address.zip_code,city.name,state.name)
+ as permanent ,
+concat_ws(" ",(SELECT DISTINCT address.type  from address  WHERE address.type = "present" ),city.name,state.name)
+ as present, employer.name, employment.name as employment 
+from employee, address,city,state, employer,employment 
+WHERE address.employee_id = employee.id and address.city_id = city.id and city.id = state.id and employee.employer_id = employer.id and employment.id = employee.employment_id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT `E`.`id`, `first_name`, `date_of_birth`, `A1`.`address` AS 'present_add', `A2`.`address` AS 'permanent_add'
+FROM `employee` `E` 
+LEFT JOIN `address` `A1` 
+	ON `E`.id = `A1`.employee_id AND `A1`.`type`='present'
+LEFT JOIN `address` `A2` 
+	ON `E`.id = `A2`.employee_id AND `A2`.`type`='permanent'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT employee.first_name, employee.id FROM employee
+
+
+
+
+
+SELECT `E`.`id`, `first_name`, `date_of_birth`, concat_ws(`A1`.`address` ,`A1`.zip_code , `A1`.) AS 'present_add', `A2`.`address` AS 'permanent_add'
+FROM `employee` `E` 
+LEFT JOIN `address` `A1` 
+	ON `E`.id = `A1`.employee_id AND `A1`.`type`='present'
+LEFT JOIN `address` `A2` 
+	ON `E`.id = `A2`.employee_id AND `A2`.`type`='permanent'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT `E`.`id`, `first_name`, `date_of_birth`, concat_ws(`A1`.`address` ,`A1`.`zip_code` , `A1`.`city_id`) AS 'present_add', `A2`.`address` AS 'permanent_add'
+FROM `employee` `E` 
+LEFT JOIN `address` `A1` 
+	ON `E`.id = `A1`.employee_id AND `A1`.`type`='present'
+LEFT JOIN `address` `A2` 
+	ON `E`.id = `A2`.employee_id AND `A2`.`type`='permanent'
+SELECT `E`.`id`, `first_name`, `date_of_birth`, concat_ws(`A1`.`address` ," ", `A1`.`zip_code` ) AS 'present_add', concat_ws(`A2`.`address` ," ", `A2`.`zip_code` ," ") AS 'permanent_add', employer.name as company, employment.name as position, contact.contact_no as contact
+FROM `employee` `E` 
+LEFT JOIN `address` `A1` 
+	ON `E`.id = `A1`.employee_id AND `A1`.`type`='present'
+LEFT JOIN `address` `A2` 
+	ON `E`.id = `A2`.employee_id AND `A2`.`type`='permanent'
+LEFT Join employer
+	ON `E`.employer_id = employer.id
+LEFT JOIN employment
+	ON `E`.employment_id = employment.id
+LEFT JOIN contact
+	ON `E`.id = contact.employee_id
+
+
+
+
+
+	group by with employee id and group concat
+
+
+
+
+	SELECT e.id, 
+       Concat(e.prefix, "", e.first_name, "", e.middle_name, "", e.last_name) AS 
+       NAME, 
+       email_id, 
+       Concat(a1.address, "", cn1.name, "", s1.name, "", a1.zip_code) AS 
+       permanent_address, 
+       Concat(a2.address, "", cn2.name, "", s2.name, "", a2.zip_code)    AS 
+       present_address, 
+   
+       po.NAME                                                              AS 
+       designation, 
+       com.NAME                                                              AS 
+       company 
+FROM   employee e 
+       INNER JOIN address a1 
+               ON e.id = a1.employee_id 
+                  AND a1.type = "permanent" 
+       INNER JOIN address a2 
+               ON e.id = a2.employee_id 
+                  AND a2.type = "present" 
+       
+       INNER JOIN employer com 
+               ON e.employer_id = com.id 
+       INNER JOIN employment po 
+               ON e.employer_id = po.id 
+       INNER JOIN city cn1 
+               ON cn1.id = a1.city_id 
+                  AND a1.type = "permanent" 
+       INNER JOIN city cn2 
+               ON cn2.id = a2.city_id  
+                  AND a2.type = "present" 
+       INNER JOIN state s1 
+               ON s1.id = cn1.state_id 
+                  AND a1.type = "permanent" 
+       INNER JOIN state s2 
+               ON s2.id = cn2.state_id 
+                  AND a2.type = "present"
+GROUP  BY e.id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT e.id, 
+       Concat(e.prefix, "", e.first_name, "", e.middle_name, "", e.last_name) AS 
+       NAME, 
+       email_id, 
+       Concat(a1.address, "", cn1.name, "", s1.name, "", a1.zip_code) AS 
+       permanent_address, 
+       Concat(a2.address, "", cn2.name, "", s2.name, "", a2.zip_code)    AS 
+       present_address, 
+   
+       po.NAME                                                              AS 
+       designation, 
+       com.NAME                                                              AS 
+       company 
+FROM   employee e 
+       LEFT JOIN address a1 
+               ON e.id = a1.employee_id 
+                  AND a1.type = "permanent" 
+       LEFT JOIN address a2 
+               ON e.id = a2.employee_id 
+                  AND a2.type = "present" 
+       
+       LEFT JOIN employer com 
+               ON e.employer_id = com.id 
+       LEFT JOIN employment po 
+               ON e.employer_id = po.id 
+       LEFT JOIN city cn1 
+               ON cn1.id = a1.city_id 
+                  AND a1.type = "permanent" 
+       LEFT JOIN city cn2 
+               ON cn2.id = a2.city_id  
+                  AND a2.type = "present" 
+       LEFT JOIN state s1 
+               ON s1.id = cn1.state_id 
+                  AND a1.type = "permanent" 
+       LEFT JOIN state s2 
+               ON s2.id = cn2.state_id 
+                  AND a2.type = "present"
+GROUP  BY e.id
